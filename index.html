@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>TBC Guide Animations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: hero + sticky filter bar; guide sections with a 4-up card grid (2-up tablet, 1-up phone); lightbox for a large preview */
+:root{color-scheme:light;
+  --bg:#f3f6f7; --surface:#ffffff; --raised:#ffffff; --ink:#141719; --muted:#5f6b70; --faint:#8a9599; --line:#e2e8ea; --soft:#edf1f2;
+  --accent:#00adee; --accent-ink:#0079ab; --accent-soft:#e2f5fd; --stage-l:#f6f8f8; --stage-d:#434d52;
+  --shadow:0 1px 2px rgba(16,32,40,.05),0 6px 20px rgba(16,32,40,.06);
+  --body:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1315; --surface:#161e21; --raised:#1c2629; --ink:#eef3f4; --muted:#9aa8ad; --faint:#6f7e83; --line:#253238; --soft:#1d282c;
+  --accent:#2fc0f5; --accent-ink:#5fd0f8; --accent-soft:#11303b; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1315; --surface:#161e21; --raised:#1c2629; --ink:#eef3f4; --muted:#9aa8ad; --faint:#6f7e83; --line:#253238; --soft:#1d282c;
+  --accent:#2fc0f5; --accent-ink:#5fd0f8; --accent-soft:#11303b; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.pad{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1200px;margin:0 auto}
+button{font:inherit;color:inherit}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+svg{flex:none}
+
+/* hero */
+.hero{padding-block:36px 26px}
+.hero .wrap{display:flex;flex-wrap:wrap;gap:22px 32px;align-items:flex-end;justify-content:space-between}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+h1{font-size:clamp(28px,4.4vw,40px);font-weight:700;letter-spacing:-.02em;line-height:1.08;margin:10px 0 10px;text-wrap:balance}
+.lede{margin:0;color:var(--muted);max-width:56ch}
+.stats{display:flex;gap:26px;margin-top:18px;flex-wrap:wrap}
+.stat b{display:block;font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.stat span{font-size:12.5px;color:var(--muted)}
+
+/* buttons */
+.btn{border:0;border-radius:12px;padding:11px 16px;cursor:pointer;display:inline-flex;gap:8px;align-items:center;justify-content:center;font-weight:600;font-size:14px;background:var(--accent);color:#fff;white-space:nowrap;transition:filter .15s,transform .15s}
+.btn:hover{filter:brightness(1.06)}.btn:active{transform:translateY(1px)}
+.btn.sub{background:var(--soft);color:var(--ink)}
+.btn.sub:hover{filter:none;background:var(--accent-soft);color:var(--accent-ink)}
+.btn svg{width:16px;height:16px}
+.btn[disabled]{opacity:.55;pointer-events:none}
+
+/* menu */
+.menu{position:relative}
+.pop{position:absolute;right:0;top:calc(100% + 8px);background:var(--raised);border:1px solid var(--line);border-radius:14px;padding:6px;min-width:250px;box-shadow:var(--shadow),0 18px 40px rgba(0,0,0,.12);z-index:40}
+.pop .h{padding:8px 10px 6px;font-size:12px;color:var(--faint);font-family:var(--mono);letter-spacing:.04em;text-transform:uppercase}
+.pop button{display:flex;width:100%;align-items:center;gap:12px;border:0;background:transparent;padding:10px;border-radius:10px;cursor:pointer;text-align:left}
+.pop button:hover,.pop button:focus-visible{background:var(--soft)}
+.pop .ico{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-ink);font-family:var(--mono);font-size:10.5px;font-weight:600}
+.pop .txt{flex:1;display:grid}
+.pop .txt b{font-weight:600;font-size:14px}
+.pop .txt small{font-size:12px;color:var(--muted)}
+
+/* toolbar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-block:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:31;background:var(--bg)}
+.bar .wrap{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;justify-content:space-between;padding-block:10px}
+.group{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.seg{display:inline-flex;background:var(--soft);border-radius:11px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;color:var(--muted);padding:7px 13px;border-radius:9px;cursor:pointer;font-weight:600;font-size:13px;display:inline-flex;gap:6px;align-items:center}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.seg svg{width:14px;height:14px}
+.seg .n{font-family:var(--mono);font-size:11px;color:var(--faint);font-weight:500}
+.lbl{font-size:12px;color:var(--faint);font-family:var(--mono);letter-spacing:.04em;text-transform:uppercase}
+
+/* sections */
+main{padding-block:28px 64px}
+section.guide{margin-bottom:44px}
+section.guide[hidden]{display:none}
+.ghead{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:flex-end;justify-content:space-between;margin-bottom:16px}
+.ghead h2{font-size:21px;font-weight:650;margin:0;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.ghead h2 .cnt{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--muted);background:var(--soft);border-radius:999px;padding:2px 9px}
+.ghead p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:560px){.grid{grid-template-columns:minmax(0,1fr)}}
+
+/* card */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;min-width:0;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-2px)}
+.stage{position:relative;aspect-ratio:581/411;background:var(--stage-l);cursor:zoom-in;border:0;padding:0;width:100%;display:block;overflow:hidden;transition:background-color .25s}
+.dark .stage{background:var(--stage-d)}
+.stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.stage .zoom{position:absolute;right:10px;bottom:10px;width:30px;height:30px;border-radius:9px;background:rgba(20,23,25,.55);color:#fff;display:grid;place-items:center;opacity:0;transition:opacity .2s}
+.stage:hover .zoom,.stage:focus-visible .zoom{opacity:1}
+.stage .zoom svg{width:15px;height:15px}
+.info{padding:14px 14px 4px;display:grid;gap:4px}
+.info h3{font-size:15.5px;font-weight:600;margin:0;letter-spacing:-.005em}
+.tags{display:flex;flex-wrap:wrap;gap:6px;font-size:12px;color:var(--muted)}
+.tags span{display:inline-flex;align-items:center;gap:5px}
+.tags span+span::before{content:"";width:3px;height:3px;border-radius:50%;background:var(--faint);margin-right:1px}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 14px 14px;margin-top:auto}
+.fbtn{border:1px solid var(--line);background:transparent;border-radius:12px;padding:9px 10px;cursor:pointer;display:flex;align-items:center;gap:9px;text-align:left;transition:border-color .15s,background .15s;min-width:0}
+.fbtn:hover{border-color:var(--accent);background:var(--accent-soft)}
+.fbtn .ic{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--soft);color:var(--ink);flex:none}
+.fbtn:hover .ic{background:var(--surface);color:var(--accent-ink)}
+.fbtn .ic svg{width:15px;height:15px}
+.fbtn .t{display:grid;line-height:1.2;min-width:0}
+.fbtn b{font-size:13px;font-weight:600}
+.fbtn small{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.fbtn[disabled]{opacity:.55;pointer-events:none}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:60;background:rgba(8,12,14,.72);display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lb[hidden]{display:none}
+.lbbox{background:var(--surface);border-radius:20px;overflow:hidden;width:min(880px,100%);max-height:100%;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.lbstage{aspect-ratio:581/411;background:var(--stage-l);position:relative;max-height:68vh}
+.lb.dark .lbstage{background:var(--stage-d)}
+.lbstage video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.lbfoot{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:center;justify-content:space-between;padding:16px 18px}
+.lbfoot h3{margin:0;font-size:18px;font-weight:600}
+.lbfoot .acts{padding:0;display:flex;gap:8px}
+.x{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;border:0;background:rgba(20,23,25,.55);color:#fff;cursor:pointer;display:grid;place-items:center}
+.x svg{width:16px;height:16px}
+
+/* progress toast */
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translate(-50%,12px);background:var(--ink);color:var(--bg);padding:12px 16px;border-radius:14px;font-size:13.5px;font-weight:500;z-index:70;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;width:min(360px,calc(100% - 32px));display:grid;gap:8px}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast .pb{height:4px;border-radius:4px;background:color-mix(in srgb,var(--bg) 25%,transparent);overflow:hidden}
+.toast .pb i{display:block;height:100%;width:0;background:var(--accent);transition:width .15s}
+.toast .pb[hidden]{display:none}
+@media (max-width:640px){
+  .hero{padding-block:26px 20px}
+  .stats{display:grid;grid-template-columns:repeat(3,auto);gap:14px;justify-content:start}
+  .stat b{font-size:17px}.stat span{font-size:11.5px}
+  .hero .menu,.hero .menu .btn{width:100%}
+  .bar{position:static}
+  .lbl{display:none}
+  .ghead .menu{width:100%}.ghead .menu .btn{width:100%}
+  .pop{left:0;right:0;min-width:0}
+}
+@media (prefers-reduced-motion: reduce){.card,.btn,.toast{transition:none}}
+</style>
+</head>
+<body>
+
+
+<div class="hero pad"><div class="wrap">
+  <div>
+    <span class="eyebrow"><i></i>TBC Mobile Bank · In-app guides</span>
+    <h1>Guide animations</h1>
+    <p class="lede">Every in-app guide animation, ready for design and development. Preview in light or dark, then take a single file or a whole set as MP4 video or Lottie.</p>
+    <div class="stats" id="stats"></div>
+  </div>
+  <div class="menu" id="allMenu">
+    <button type="button" class="btn" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8.5M4.5 7 8 10.5 11.5 7M2.5 13.5h11"/></svg>Download everything<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 6.5 3.5 3.5 3.5-3.5"/></svg></button>
+    <div class="pop" hidden></div>
+  </div>
+</div></div>
+
+<div class="bar pad"><div class="wrap">
+  <div class="seg" role="group" aria-label="Guide" id="filterSeg"></div>
+  <div class="group">
+    <span class="lbl">Language</span>
+    <div class="seg" role="group" aria-label="Language" id="langSeg">
+      <button type="button" data-v="en" aria-pressed="true">EN</button><button type="button" data-v="ka" aria-pressed="false">KA</button>
+    </div>
+    <span class="lbl">Mode</span>
+    <div class="seg" role="group" aria-label="Mode" id="modeSeg">
+      <button type="button" data-v="light" aria-pressed="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M3.4 12.6l1-1M11.6 4.4l1-1"/></svg>Light</button>
+      <button type="button" data-v="dark" aria-pressed="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 9.8A5.6 5.6 0 0 1 6.2 2.5a5.6 5.6 0 1 0 7.3 7.3Z"/></svg>Dark</button>
+    </div>
+  </div>
+</div></div>
+
+<main class="pad"><div class="wrap" id="guides"></div></main>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-labelledby="lbTitle">
+  <div class="lbbox">
+    <div class="lbstage"><video muted loop playsinline autoplay></video><button type="button" class="x" id="lbClose" aria-label="Close preview"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div>
+    <div class="lbfoot"><div><h3 id="lbTitle"></h3><div class="tags" id="lbTags"></div></div><div class="acts" id="lbActs"></div></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><div class="pb" hidden><i></i></div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+(() => {
+  const SIZES = {"home/lottie/concept-centre-dark.json": 138843, "home/lottie/search-dark.json": 34796, "home/lottie/notifications-ka-dark.json": 330423, "home/lottie/notifications-ka.json": 307773, "home/lottie/concept-centre.json": 114955, "home/lottie/edit-quick-actions-dark.json": 361062, "home/lottie/search-ka.json": 59691, "home/lottie/concept-centre-ka.json": 114960, "home/lottie/edit-quick-actions-ka-dark.json": 712669, "home/lottie/concept-centre-ka-dark.json": 138848, "home/lottie/edit-quick-actions-ka.json": 697809, "home/lottie/notifications.json": 186203, "home/lottie/search-ka-dark.json": 59507, "home/lottie/edit-quick-actions.json": 351266, "home/lottie/notifications-dark.json": 206504, "home/lottie/search.json": 34978, "home/mp4/search-dark.mp4": 45615, "home/mp4/notifications-ka.mp4": 450947, "home/mp4/concept-centre-ka.mp4": 358347, "home/mp4/concept-centre-ka-dark.mp4": 333664, "home/mp4/concept-centre.mp4": 358347, "home/mp4/edit-quick-actions-ka-dark.mp4": 893436, "home/mp4/search-ka-dark.mp4": 52005, "home/mp4/search-ka.mp4": 52536, "home/mp4/edit-quick-actions-dark.mp4": 716169, "home/mp4/edit-quick-actions.mp4": 801029, "home/mp4/edit-quick-actions-ka.mp4": 987976, "home/mp4/notifications-ka-dark.mp4": 464669, "home/mp4/notifications.mp4": 393784, "home/mp4/search.mp4": 45463, "home/mp4/concept-centre-dark.mp4": 333664, "home/mp4/notifications-dark.mp4": 422139, "pfm/lottie/pfm_guide_set_date_ka.json": 161971, "pfm/lottie/pfm_guide_compare.json": 37318, "pfm/lottie/pfm_guide_compare_dark.json": 37806, "pfm/lottie/pfm_guide_charts_ka.json": 141177, "pfm/lottie/pfm_guide_set_date.json": 149598, "pfm/lottie/pfm_guide_compare_ka_dark.json": 46472, "pfm/lottie/pfm_guide_set_date_dark.json": 161232, "pfm/lottie/pfm_guide_charts.json": 129522, "pfm/lottie/pfm_guide_charts_dark.json": 131721, "pfm/lottie/pfm_guide_date_range.json": 76093, "pfm/lottie/pfm_guide_compare_ka.json": 45984, "pfm/lottie/pfm_guide_date_range_dark.json": 77192, "pfm/lottie/pfm_guide_set_date_ka_dark.json": 173605, "pfm/lottie/pfm_guide_charts_ka_dark.json": 143376, "pfm/lottie/pfm_guide_date_range_ka_dark.json": 81113, "pfm/lottie/pfm_guide_date_range_ka.json": 80014, "pfm/mp4/pfm_guide_compare_ka_dark.mp4": 120556, "pfm/mp4/pfm_guide_compare.mp4": 129189, "pfm/mp4/pfm_guide_charts_dark.mp4": 285402, "pfm/mp4/pfm_guide_compare_ka.mp4": 132788, "pfm/mp4/pfm_guide_charts_ka_dark.mp4": 312240, "pfm/mp4/pfm_guide_compare_dark.mp4": 116565, "pfm/mp4/pfm_guide_date_range_dark.mp4": 169276, "pfm/mp4/pfm_guide_date_range_ka_dark.mp4": 161380, "pfm/mp4/pfm_guide_set_date_ka.mp4": 359282, "pfm/mp4/pfm_guide_date_range_ka.mp4": 183699, "pfm/mp4/pfm_guide_date_range.mp4": 191139, "pfm/mp4/pfm_guide_set_date_dark.mp4": 272008, "pfm/mp4/pfm_guide_charts_ka.mp4": 357404, "pfm/mp4/pfm_guide_set_date.mp4": 293141, "pfm/mp4/pfm_guide_charts.mp4": 323902, "pfm/mp4/pfm_guide_set_date_ka_dark.mp4": 322434, "accounts/lottie/accounts_autohide_dark.json": 1341975, "accounts/lottie/accounts_carousel_drag_to_hide_light.json": 3506267, "accounts/lottie/accounts_carousel_autohide_dark.json": 1064771, "accounts/lottie/accounts_carousel_autohide_light.json": 862988, "accounts/lottie/accounts_carousel_drag_to_hide_dark.json": 3951042, "accounts/lottie/accounts_drag_to_hide_dark.json": 3924194, "accounts/lottie/accounts_drag_to_hide_light.json": 3393167, "accounts/lottie/accounts_autohide_light.json": 1122552, "accounts/mp4/accounts_carousel_drag_to_hide_dark.mp4": 529139, "accounts/mp4/accounts_drag_to_hide_light.mp4": 373537, "accounts/mp4/accounts_carousel_autohide_dark.mp4": 90438, "accounts/mp4/accounts_drag_to_hide_dark.mp4": 413043, "accounts/mp4/accounts_carousel_drag_to_hide_light.mp4": 432272, "accounts/mp4/accounts_autohide_dark.mp4": 117157, "accounts/mp4/accounts_carousel_autohide_light.mp4": 67563, "accounts/mp4/accounts_autohide_light.mp4": 100094}, DUR = {"accounts/mp4/accounts_autohide_dark.mp4": 3.6, "accounts/mp4/accounts_autohide_light.mp4": 3.6, "accounts/mp4/accounts_carousel_autohide_dark.mp4": 3.6, "accounts/mp4/accounts_carousel_autohide_light.mp4": 3.6, "accounts/mp4/accounts_carousel_drag_to_hide_dark.mp4": 7.6, "accounts/mp4/accounts_carousel_drag_to_hide_light.mp4": 7.6, "accounts/mp4/accounts_drag_to_hide_dark.mp4": 7.6, "accounts/mp4/accounts_drag_to_hide_light.mp4": 7.6, "home/mp4/concept-centre-dark.mp4": 5.0, "home/mp4/concept-centre-ka-dark.mp4": 5.0, "home/mp4/concept-centre-ka.mp4": 5.0, "home/mp4/concept-centre.mp4": 5.0, "home/mp4/edit-quick-actions-dark.mp4": 7.8, "home/mp4/edit-quick-actions-ka-dark.mp4": 7.8, "home/mp4/edit-quick-actions-ka.mp4": 7.8, "home/mp4/edit-quick-actions.mp4": 7.8, "home/mp4/notifications-dark.mp4": 7.2, "home/mp4/notifications-ka-dark.mp4": 7.2, "home/mp4/notifications-ka.mp4": 7.2, "home/mp4/notifications.mp4": 7.2, "home/mp4/search-dark.mp4": 7.3, "home/mp4/search-ka-dark.mp4": 7.3, "home/mp4/search-ka.mp4": 7.3, "home/mp4/search.mp4": 7.3, "pfm/mp4/pfm_guide_charts.mp4": 6.0, "pfm/mp4/pfm_guide_charts_dark.mp4": 6.0, "pfm/mp4/pfm_guide_charts_ka.mp4": 6.0, "pfm/mp4/pfm_guide_charts_ka_dark.mp4": 6.0, "pfm/mp4/pfm_guide_compare.mp4": 7.0, "pfm/mp4/pfm_guide_compare_dark.mp4": 7.0, "pfm/mp4/pfm_guide_compare_ka.mp4": 7.0, "pfm/mp4/pfm_guide_compare_ka_dark.mp4": 7.0, "pfm/mp4/pfm_guide_date_range.mp4": 5.5, "pfm/mp4/pfm_guide_date_range_dark.mp4": 5.5, "pfm/mp4/pfm_guide_date_range_ka.mp4": 5.5, "pfm/mp4/pfm_guide_date_range_ka_dark.mp4": 5.5, "pfm/mp4/pfm_guide_set_date.mp4": 4.5, "pfm/mp4/pfm_guide_set_date_dark.mp4": 4.5, "pfm/mp4/pfm_guide_set_date_ka.mp4": 4.5, "pfm/mp4/pfm_guide_set_date_ka_dark.mp4": 4.5};
+  const GUIDES = [
+    { key: 'home', name: 'Home guide', desc: 'Tips on the home screen', langs: true, items: [
+      { title: 'Edit quick actions', base: 'edit-quick-actions' }, { title: 'Search', base: 'search' },
+      { title: 'Notifications', base: 'notifications' }, { title: 'Concept centre', base: 'concept-centre' } ],
+      file: (it, l, m) => `${it.base}${l === 'ka' ? '-ka' : ''}${m === 'dark' ? '-dark' : ''}` },
+    { key: 'pfm', name: 'PFM guide', desc: 'Tips inside My Finances', langs: true, items: [
+      { title: 'Set starting date', base: 'pfm_guide_set_date' }, { title: 'Date range', base: 'pfm_guide_date_range' },
+      { title: 'Three different charts', base: 'pfm_guide_charts' }, { title: 'Expenses / Income', base: 'pfm_guide_compare' } ],
+      file: (it, l, m) => `${it.base}${l === 'ka' ? '_ka' : ''}${m === 'dark' ? '_dark' : ''}` },
+    { key: 'accounts', name: 'Accounts guide', desc: 'Hiding zero-balance accounts on the list and carousel widget', langs: false, items: [
+      { title: 'Empty accounts hidden', base: 'accounts_autohide', tag: 'List widget' }, { title: 'Drag to hide', base: 'accounts_drag_to_hide', tag: 'List widget' },
+      { title: 'Empty accounts hidden', base: 'accounts_carousel_autohide', tag: 'Carousel widget' }, { title: 'Drag to hide', base: 'accounts_carousel_drag_to_hide', tag: 'Carousel widget' } ],
+      file: (it, l, m) => `${it.base}_${m}` },
+  ];
+  const FMT = { mp4: { dir: 'mp4', ext: 'mp4', label: 'MP4', sub: 'Video' }, lottie: { dir: 'lottie', ext: 'json', label: 'Lottie', sub: 'JSON' } };
+  const ICON_DL = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8.5M4.5 7 8 10.5 11.5 7M2.5 13.5h11"/></svg>';
+  const ICON_VID = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="1.8" y="3.5" width="9" height="9" rx="2"/><path d="m10.8 6.6 3.4-2v6.8l-3.4-2z"/></svg>';
+  const ICON_LOT = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13c3.5 0 3.5-10 7-10M6 13h7"/><circle cx="10.5" cy="3" r=".2"/></svg>';
+  const path = (g, it, l, m, f) => `${g.key}/${FMT[f].dir}/${g.file(it, g.langs ? l : 'en', m)}.${FMT[f].ext}`;
+  const size = n => n >= 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB';
+  const variants = g => (g.langs ? ['en', 'ka'] : ['en']).flatMap(l => ['light', 'dark'].map(m => [l, m]));
+  const files = (gs, fmts) => gs.flatMap(g => g.items.flatMap(it => variants(g).flatMap(([l, m]) => fmts.map(f => ({ g, p: path(g, it, l, m, f), f })))));
+  const total = list => list.reduce((a, x) => a + (SIZES[x.p] || 0), 0);
+  const fmtsOf = k => k === 'both' ? ['mp4', 'lottie'] : [k];
+
+  const S = { lang: 'en', mode: 'light', filter: 'all' };
+  let dl = null;
+
+  // ---------- stats + filter ----------
+  const allFiles = files(GUIDES, ['mp4', 'lottie']);
+  document.getElementById('stats').innerHTML =
+    `<div class="stat"><b>${GUIDES.reduce((a, g) => a + g.items.length, 0)}</b><span>animations</span></div>
+     <div class="stat"><b>${files(GUIDES, ['mp4']).length}</b><span>files per format</span></div>
+     <div class="stat"><b>${size(total(allFiles))}</b><span>MP4 + Lottie</span></div>`;
+  const fseg = document.getElementById('filterSeg');
+  fseg.innerHTML = [['all', 'All', GUIDES.reduce((a, g) => a + g.items.length, 0)], ...GUIDES.map(g => [g.key, g.name.replace(' guide', ''), g.items.length])]
+    .map(([k, n, c]) => `<button type="button" data-v="${k}" aria-pressed="${k === 'all'}">${n}<span class="n">${c}</span></button>`).join('');
+
+  // ---------- sections ----------
+  const root = document.getElementById('guides'), updaters = [], sections = {};
+  GUIDES.forEach(g => {
+    const s = document.createElement('section'); s.className = 'guide'; sections[g.key] = s;
+    s.innerHTML = `<div class="ghead"><div><h2>${g.name}<span class="cnt">${g.items.length} animations</span></h2><p>${g.desc}${g.langs ? ' · English and Georgian' : ''}</p></div>
+      <div class="menu"><button type="button" class="btn sub" aria-haspopup="true" aria-expanded="false">${ICON_DL}Download all<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 6.5 3.5 3.5 3.5-3.5"/></svg></button><div class="pop" hidden></div></div></div>
+      <div class="grid"></div>`;
+    setupMenu(s.querySelector('.menu'), `${g.name} · zip`, [g]);
+    const grid = s.querySelector('.grid');
+    g.items.forEach(it => {
+      const c = document.createElement('article'); c.className = 'card';
+      c.innerHTML = `<button type="button" class="stage" aria-label="Open larger preview of ${it.title}"><video muted loop playsinline autoplay preload="auto"></video><span class="zoom">${'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 2.5h4v4M6.5 13.5h-4v-4M13.5 2.5 9 7M2.5 13.5 7 9"/></svg>'}</span></button>
+        <div class="info"><h3>${it.title}</h3><div class="tags"></div></div>
+        <div class="acts"></div>`;
+      const v = c.querySelector('video'), tags = c.querySelector('.tags'), acts = c.querySelector('.acts');
+      const upd = () => {
+        const src = path(g, it, S.lang, S.mode, 'mp4');
+        if (v.getAttribute('src') !== src) { v.setAttribute('src', src); v.play?.().catch(() => {}); }
+        c.classList.toggle('dark', S.mode === 'dark');
+        tags.innerHTML = [it.tag, g.langs ? (S.lang === 'ka' ? 'Georgian' : 'English') : null, S.mode === 'dark' ? 'Dark' : 'Light', (DUR[src] || 0).toFixed(1) + ' s'].filter(Boolean).map(t => `<span>${t}</span>`).join('');
+        acts.innerHTML = ''; fileButtons(g, it).forEach(b => acts.appendChild(b));
+      };
+      c.querySelector('.stage').onclick = () => openLb(g, it);
+      grid.appendChild(c); updaters.push(upd); upd();
+    });
+    root.appendChild(s);
+  });
+  setupMenu(document.getElementById('allMenu'), 'All guides · one zip', GUIDES);
+
+  function fileButtons(g, it) {
+    return ['mp4', 'lottie'].map(f => {
+      const p = path(g, it, S.lang, S.mode, f), b = document.createElement('button');
+      b.type = 'button'; b.className = 'fbtn'; b.title = `Download ${p.split('/').pop()}`;
+      b.innerHTML = `<span class="ic">${f === 'mp4' ? ICON_VID : ICON_LOT}</span><span class="t"><b>${FMT[f].label}</b><small>${size(SIZES[p] || 0)}</small></span>`;
+      b.onclick = async () => { b.disabled = true; try { await saveOne(p); } catch (e) { report(e); } b.disabled = false; };
+      return b;
+    });
+  }
+
+  // ---------- controls ----------
+  const bindSeg = (id, key, after) => { const seg = document.getElementById(id);
+    seg.querySelectorAll('button').forEach(b => b.onclick = () => { S[key] = b.dataset.v; seg.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); after(); }); };
+  const refresh = () => { updaters.forEach(u => u()); if (!lb.hidden && lbCur) openLb(...lbCur); };
+  bindSeg('langSeg', 'lang', refresh);
+  bindSeg('modeSeg', 'mode', refresh);
+  bindSeg('filterSeg', 'filter', () => { GUIDES.forEach(g => sections[g.key].hidden = S.filter !== 'all' && S.filter !== g.key); });
+
+  // ---------- menus ----------
+  function setupMenu(menu, heading, gs) {
+    const btn = menu.querySelector('button'), pop = menu.querySelector('.pop');
+    pop.innerHTML = `<div class="h">${heading}</div>`;
+    [['mp4', 'All MP4', 'MP4'], ['lottie', 'All Lottie', 'JSON'], ['both', 'MP4 + Lottie', 'ALL']].forEach(([k, label, ico]) => {
+      const list = files(gs, fmtsOf(k)), b = document.createElement('button'); b.type = 'button';
+      b.innerHTML = `<span class="ico">${ico}</span><span class="txt"><b>${label}</b><small>${list.length} files · ${size(total(list))}</small></span>`;
+      b.onclick = async () => { close(); btn.disabled = true; try { await saveZip(gs, k); } catch (e) { report(e); } btn.disabled = false; };
+      pop.appendChild(b);
+    });
+    const close = () => { pop.hidden = true; btn.setAttribute('aria-expanded', 'false'); };
+    btn.onclick = e => { e.stopPropagation(); const open = pop.hidden; document.querySelectorAll('.pop').forEach(p => p.hidden = true); document.querySelectorAll('[aria-haspopup]').forEach(x => x.setAttribute('aria-expanded', 'false')); pop.hidden = !open; btn.setAttribute('aria-expanded', String(open)); };
+    document.addEventListener('click', e => { if (!menu.contains(e.target)) close(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  }
+
+  // ---------- lightbox ----------
+  const lb = document.getElementById('lb'), lbv = lb.querySelector('video'); let lbCur = null, lastFocus = null;
+  function openLb(g, it) {
+    lbCur = [g, it]; if (lb.hidden) lastFocus = document.activeElement;
+    const src = path(g, it, S.lang, S.mode, 'mp4');
+    if (lbv.getAttribute('src') !== src) { lbv.setAttribute('src', src); lbv.play?.().catch(() => {}); }
+    lb.classList.toggle('dark', S.mode === 'dark');
+    document.getElementById('lbTitle').textContent = it.title;
+    document.getElementById('lbTags').innerHTML = [g.name, it.tag, g.langs ? (S.lang === 'ka' ? 'Georgian' : 'English') : null, S.mode === 'dark' ? 'Dark' : 'Light', (DUR[src] || 0).toFixed(1) + ' s'].filter(Boolean).map(t => `<span>${t}</span>`).join('');
+    const a = document.getElementById('lbActs'); a.innerHTML = ''; fileButtons(g, it).forEach(b => a.appendChild(b));
+    lb.hidden = false; document.getElementById('lbClose').focus();
+  }
+  const closeLb = () => { lb.hidden = true; lbv.pause(); lbCur = null; lastFocus?.focus?.(); };
+  document.getElementById('lbClose').onclick = closeLb;
+  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !lb.hidden) closeLb(); });
+
+  // ---------- toast ----------
+  const toastEl = document.getElementById('toast'), tMsg = document.getElementById('toastMsg'), pb = toastEl.querySelector('.pb'), pbi = pb.querySelector('i'); let tt;
+  const toast = (msg, prog) => { tMsg.textContent = msg; pb.hidden = prog == null; if (prog != null) pbi.style.width = (prog * 100) + '%';
+    toastEl.classList.add('show'); clearTimeout(tt); if (prog == null) tt = setTimeout(() => toastEl.classList.remove('show'), 2800); };
+
+  // ---------- downloads ----------
+  async function save(filename, blob) {
+    const url = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 30000);
+    toast(`Downloading ${filename}`);
+  }
+  async function saveOne(p) { const blob = await (await fetch(p)).blob(); await save(p.split('/').pop(), blob); }
+  async function saveZip(gs, k) {
+    const label = { mp4: 'MP4', lottie: 'Lottie', both: 'MP4 + Lottie' }[k];
+    const name = gs.length > 1 ? 'TBC guide animations' : gs[0].name;
+    const list = files(gs, fmtsOf(k)), zip = new JSZip(); let done = 0;
+    toast(`Collecting ${list.length} files…`, 0);
+    for (let i = 0; i < list.length; i += 6) {
+      await Promise.all(list.slice(i, i + 6).map(async x => {
+        const blob = await (await fetch(x.p)).blob();
+        zip.file(`${name}/${gs.length > 1 ? x.g.name + '/' : ''}${FMT[x.f].label}/${x.p.split('/').pop()}`, blob);
+        done++; toast(`Collecting files… ${done} / ${list.length}`, done / list.length * .9);
+      }));
+    }
+    toast('Packing zip…', .95);
+    const out = await zip.generateAsync({ type: 'blob', compression: 'STORE' });
+    toastEl.classList.remove('show');
+    await save(`${name} – ${label}.zip`, out);
+  }
+  function report(err) {
+    const c = err && err.code;
+    if (c === 'declined') return toast('Download cancelled');
+    if (c === 'rate_limited') return toast('A save prompt is already open');
+    if (c === 'too_large') return toast('Too large for this device. Try one guide at a time.');
+    toast('Could not download the file. Try again.');
+  }
+})();
+</script>
+
+</body>
+</html>

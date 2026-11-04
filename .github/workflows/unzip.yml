@@ -1,0 +1,22 @@
+name: Unzip
+on: [push, workflow_dispatch]
+permissions:
+  contents: write
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unzip and commit
+        run: |
+          Z=$(ls *.zip | head -1)
+          [ -z "$Z" ] && exit 0
+          unzip -o "$Z" -d _tmp
+          D=$(find _tmp -name index.html -printf '%h\n' | head -1)
+          cp -r "$D"/. .
+          rm -rf _tmp "$Z"
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add -A
+          git commit -m "Unzip site files"
+          git push

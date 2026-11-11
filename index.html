@@ -322,13 +322,17 @@ section.guide[hidden]{display:none}
 
   // ---------- downloads ----------
   async function save(filename, blob) {
-    if (!dl) throw { code: 'unavailable' };
+    if (!dl) {
+      const url = URL.createObjectURL(blob), a = document.createElement('a');
+      a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+      toast(`Downloading ${filename}`); return;
+    }
     const r = await dl.save({ filename, data: blob });
     if (r.status === 'saved') toast(`Saved ${filename}`);
   }
   async function saveOne(p) { const blob = await (await fetch(p)).blob(); await save(p.split('/').pop(), blob); }
   async function saveZip(gs, k, sts = [S.style]) {
-    if (!dl) throw { code: 'unavailable' };
     const label = { mp4: 'MP4', lottie: 'Lottie', both: 'MP4 + Lottie' }[k] + (sts.length > 1 ? ', all styles' : ` (${STYLES[sts[0]]})`);
     const name = gs.length > 1 ? 'TBC guide animations' : gs[0].name;
     const list = files(gs, fmtsOf(k), sts), zip = new JSZip(); let done = 0;
@@ -343,14 +347,14 @@ section.guide[hidden]{display:none}
     toast('Packing zip…', .95);
     const out = await zip.generateAsync({ type: 'blob', compression: 'STORE' });
     toastEl.classList.remove('show');
-    await save(`${name} – ${label}.zip`, out);
+    await save(`${name} - ${label}.zip`, out);
   }
   function report(err) {
     const c = err && err.code;
     if (c === 'declined') return toast('Download cancelled');
     if (c === 'rate_limited') return toast('A save prompt is already open');
     if (c === 'too_large') return toast('Too large for this device. Try one guide at a time.');
-    toast(dl ? 'Could not save the file. Try again.' : 'Downloads work when this page is open in claude.ai.');
+    toast('Could not save the file. Try again.');
   }
   if (window.claude?.use) claude.use('downloads').then(ns => { dl = ns; }).catch(() => {});
 })();

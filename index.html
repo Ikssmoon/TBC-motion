@@ -1,14 +1,10 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>TBC Guide Animations</title>
+<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: hero + sticky filter bar; guide sections with a 4-up card grid (2-up tablet, 1-up phone); lightbox for a large preview */
-:root{color-scheme:light;
+:root{
   --bg:#f3f6f7; --surface:#ffffff; --raised:#ffffff; --ink:#141719; --muted:#5f6b70; --faint:#8a9599; --line:#e2e8ea; --soft:#edf1f2;
   --accent:#00adee; --accent-ink:#0079ab; --accent-soft:#e2f5fd; --stage-l:#f6f8f8; --stage-d:#434d52;
   --shadow:0 1px 2px rgba(16,32,40,.05),0 6px 20px rgba(16,32,40,.06);
@@ -68,6 +64,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .seg button{border:0;background:transparent;color:var(--muted);padding:7px 13px;border-radius:9px;cursor:pointer;font-weight:600;font-size:13px;display:inline-flex;gap:6px;align-items:center}
 .seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.1)}
 .seg svg{width:14px;height:14px}
+.seg .sw{width:9px;height:9px;border-radius:50%;display:inline-block;box-shadow:0 0 0 1.5px var(--surface)}
 .seg .n{font-family:var(--mono);font-size:11px;color:var(--faint);font-weight:500}
 .lbl{font-size:12px;color:var(--faint);font-family:var(--mono);letter-spacing:.04em;text-transform:uppercase}
 
@@ -138,15 +135,12 @@ section.guide[hidden]{display:none}
 }
 @media (prefers-reduced-motion: reduce){.card,.btn,.toast{transition:none}}
 </style>
-</head>
-<body>
-
 
 <div class="hero pad"><div class="wrap">
   <div>
     <span class="eyebrow"><i></i>TBC Mobile Bank · In-app guides</span>
     <h1>Guide animations</h1>
-    <p class="lede">Every in-app guide animation, ready for design and development. Preview in light or dark, then take a single file or a whole set as MP4 video or Lottie.</p>
+    <p class="lede">Every in-app guide animation in the Mass, Concept and Wealth styles, ready for design and development. Pick a style, preview in light or dark, then take a single file or a whole set as MP4 video or Lottie.</p>
     <div class="stats" id="stats"></div>
   </div>
   <div class="menu" id="allMenu">
@@ -158,6 +152,10 @@ section.guide[hidden]{display:none}
 <div class="bar pad"><div class="wrap">
   <div class="seg" role="group" aria-label="Guide" id="filterSeg"></div>
   <div class="group">
+    <span class="lbl">Style</span>
+    <div class="seg" role="group" aria-label="Style" id="styleSeg">
+      <button type="button" data-v="mass" aria-pressed="true"><i class="sw" style="background:#00ADEE"></i>Mass</button><button type="button" data-v="concept" aria-pressed="false"><i class="sw" style="background:#182CC0"></i>Concept</button><button type="button" data-v="wealth" aria-pressed="false"><i class="sw" style="background:#37506E"></i>Wealth</button>
+    </div>
     <span class="lbl">Language</span>
     <div class="seg" role="group" aria-label="Language" id="langSeg">
       <button type="button" data-v="en" aria-pressed="true">EN</button><button type="button" data-v="ka" aria-pressed="false">KA</button>
@@ -183,41 +181,43 @@ section.guide[hidden]{display:none}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 (() => {
-  const SIZES = {"home/lottie/concept-centre-dark.json": 138843, "home/lottie/search-dark.json": 34796, "home/lottie/notifications-ka-dark.json": 330423, "home/lottie/notifications-ka.json": 307773, "home/lottie/concept-centre.json": 114955, "home/lottie/edit-quick-actions-dark.json": 361062, "home/lottie/search-ka.json": 59691, "home/lottie/concept-centre-ka.json": 114960, "home/lottie/edit-quick-actions-ka-dark.json": 712669, "home/lottie/concept-centre-ka-dark.json": 138848, "home/lottie/edit-quick-actions-ka.json": 697809, "home/lottie/notifications.json": 186203, "home/lottie/search-ka-dark.json": 59507, "home/lottie/edit-quick-actions.json": 351266, "home/lottie/notifications-dark.json": 206504, "home/lottie/search.json": 34978, "home/mp4/search-dark.mp4": 45615, "home/mp4/notifications-ka.mp4": 450947, "home/mp4/concept-centre-ka.mp4": 358347, "home/mp4/concept-centre-ka-dark.mp4": 333664, "home/mp4/concept-centre.mp4": 358347, "home/mp4/edit-quick-actions-ka-dark.mp4": 893436, "home/mp4/search-ka-dark.mp4": 52005, "home/mp4/search-ka.mp4": 52536, "home/mp4/edit-quick-actions-dark.mp4": 716169, "home/mp4/edit-quick-actions.mp4": 801029, "home/mp4/edit-quick-actions-ka.mp4": 987976, "home/mp4/notifications-ka-dark.mp4": 464669, "home/mp4/notifications.mp4": 393784, "home/mp4/search.mp4": 45463, "home/mp4/concept-centre-dark.mp4": 333664, "home/mp4/notifications-dark.mp4": 422139, "pfm/lottie/pfm_guide_set_date_ka.json": 161971, "pfm/lottie/pfm_guide_compare.json": 37318, "pfm/lottie/pfm_guide_compare_dark.json": 37806, "pfm/lottie/pfm_guide_charts_ka.json": 141177, "pfm/lottie/pfm_guide_set_date.json": 149598, "pfm/lottie/pfm_guide_compare_ka_dark.json": 46472, "pfm/lottie/pfm_guide_set_date_dark.json": 161232, "pfm/lottie/pfm_guide_charts.json": 129522, "pfm/lottie/pfm_guide_charts_dark.json": 131721, "pfm/lottie/pfm_guide_date_range.json": 76093, "pfm/lottie/pfm_guide_compare_ka.json": 45984, "pfm/lottie/pfm_guide_date_range_dark.json": 77192, "pfm/lottie/pfm_guide_set_date_ka_dark.json": 173605, "pfm/lottie/pfm_guide_charts_ka_dark.json": 143376, "pfm/lottie/pfm_guide_date_range_ka_dark.json": 81113, "pfm/lottie/pfm_guide_date_range_ka.json": 80014, "pfm/mp4/pfm_guide_compare_ka_dark.mp4": 120556, "pfm/mp4/pfm_guide_compare.mp4": 129189, "pfm/mp4/pfm_guide_charts_dark.mp4": 285402, "pfm/mp4/pfm_guide_compare_ka.mp4": 132788, "pfm/mp4/pfm_guide_charts_ka_dark.mp4": 312240, "pfm/mp4/pfm_guide_compare_dark.mp4": 116565, "pfm/mp4/pfm_guide_date_range_dark.mp4": 169276, "pfm/mp4/pfm_guide_date_range_ka_dark.mp4": 161380, "pfm/mp4/pfm_guide_set_date_ka.mp4": 359282, "pfm/mp4/pfm_guide_date_range_ka.mp4": 183699, "pfm/mp4/pfm_guide_date_range.mp4": 191139, "pfm/mp4/pfm_guide_set_date_dark.mp4": 272008, "pfm/mp4/pfm_guide_charts_ka.mp4": 357404, "pfm/mp4/pfm_guide_set_date.mp4": 293141, "pfm/mp4/pfm_guide_charts.mp4": 323902, "pfm/mp4/pfm_guide_set_date_ka_dark.mp4": 322434, "accounts/lottie/accounts_autohide_dark.json": 1341975, "accounts/lottie/accounts_carousel_drag_to_hide_light.json": 3506267, "accounts/lottie/accounts_carousel_autohide_dark.json": 1064771, "accounts/lottie/accounts_carousel_autohide_light.json": 862988, "accounts/lottie/accounts_carousel_drag_to_hide_dark.json": 3951042, "accounts/lottie/accounts_drag_to_hide_dark.json": 3924194, "accounts/lottie/accounts_drag_to_hide_light.json": 3393167, "accounts/lottie/accounts_autohide_light.json": 1122552, "accounts/mp4/accounts_carousel_drag_to_hide_dark.mp4": 529139, "accounts/mp4/accounts_drag_to_hide_light.mp4": 373537, "accounts/mp4/accounts_carousel_autohide_dark.mp4": 90438, "accounts/mp4/accounts_drag_to_hide_dark.mp4": 413043, "accounts/mp4/accounts_carousel_drag_to_hide_light.mp4": 432272, "accounts/mp4/accounts_autohide_dark.mp4": 117157, "accounts/mp4/accounts_carousel_autohide_light.mp4": 67563, "accounts/mp4/accounts_autohide_light.mp4": 100094}, DUR = {"accounts/mp4/accounts_autohide_dark.mp4": 3.6, "accounts/mp4/accounts_autohide_light.mp4": 3.6, "accounts/mp4/accounts_carousel_autohide_dark.mp4": 3.6, "accounts/mp4/accounts_carousel_autohide_light.mp4": 3.6, "accounts/mp4/accounts_carousel_drag_to_hide_dark.mp4": 7.6, "accounts/mp4/accounts_carousel_drag_to_hide_light.mp4": 7.6, "accounts/mp4/accounts_drag_to_hide_dark.mp4": 7.6, "accounts/mp4/accounts_drag_to_hide_light.mp4": 7.6, "home/mp4/concept-centre-dark.mp4": 5.0, "home/mp4/concept-centre-ka-dark.mp4": 5.0, "home/mp4/concept-centre-ka.mp4": 5.0, "home/mp4/concept-centre.mp4": 5.0, "home/mp4/edit-quick-actions-dark.mp4": 7.8, "home/mp4/edit-quick-actions-ka-dark.mp4": 7.8, "home/mp4/edit-quick-actions-ka.mp4": 7.8, "home/mp4/edit-quick-actions.mp4": 7.8, "home/mp4/notifications-dark.mp4": 7.2, "home/mp4/notifications-ka-dark.mp4": 7.2, "home/mp4/notifications-ka.mp4": 7.2, "home/mp4/notifications.mp4": 7.2, "home/mp4/search-dark.mp4": 7.3, "home/mp4/search-ka-dark.mp4": 7.3, "home/mp4/search-ka.mp4": 7.3, "home/mp4/search.mp4": 7.3, "pfm/mp4/pfm_guide_charts.mp4": 6.0, "pfm/mp4/pfm_guide_charts_dark.mp4": 6.0, "pfm/mp4/pfm_guide_charts_ka.mp4": 6.0, "pfm/mp4/pfm_guide_charts_ka_dark.mp4": 6.0, "pfm/mp4/pfm_guide_compare.mp4": 7.0, "pfm/mp4/pfm_guide_compare_dark.mp4": 7.0, "pfm/mp4/pfm_guide_compare_ka.mp4": 7.0, "pfm/mp4/pfm_guide_compare_ka_dark.mp4": 7.0, "pfm/mp4/pfm_guide_date_range.mp4": 5.5, "pfm/mp4/pfm_guide_date_range_dark.mp4": 5.5, "pfm/mp4/pfm_guide_date_range_ka.mp4": 5.5, "pfm/mp4/pfm_guide_date_range_ka_dark.mp4": 5.5, "pfm/mp4/pfm_guide_set_date.mp4": 4.5, "pfm/mp4/pfm_guide_set_date_dark.mp4": 4.5, "pfm/mp4/pfm_guide_set_date_ka.mp4": 4.5, "pfm/mp4/pfm_guide_set_date_ka_dark.mp4": 4.5};
+  const SIZES = {"home/lottie/burger-menu-ka-wealth.json": 4334657, "home/mp4/burger-menu-ka-wealth.mp4": 701272, "home/lottie/burger-menu-wealth.json": 4019598, "home/mp4/burger-menu-wealth.mp4": 590905, "home/lottie/burger-menu-ka-concept.json": 4443277, "home/mp4/burger-menu-ka-concept.mp4": 723407, "home/lottie/search-dark-mass.json": 34803, "home/lottie/search-dark-wealth.json": 34814, "home/lottie/notifications-dark-mass.json": 204455, "home/lottie/notifications-ka-wealth.json": 306653, "home/lottie/edit-quick-actions-ka-concept.json": 696428, "home/lottie/concept-centre-dark-wealth.json": 132855, "home/lottie/edit-quick-actions-dark-concept.json": 358382, "home/lottie/notifications-mass.json": 184146, "home/lottie/concept-centre-concept.json": 110131, "home/lottie/edit-quick-actions-concept.json": 349885, "home/lottie/edit-quick-actions-ka-dark-mass.json": 710328, "home/lottie/concept-centre-ka-wealth.json": 110092, "home/lottie/burger-menu-concept.json": 4168019, "home/lottie/search-mass.json": 34985, "home/lottie/notifications-dark-wealth.json": 204068, "home/lottie/notifications-concept.json": 185018, "home/lottie/edit-quick-actions-ka-mass.json": 695448, "home/lottie/edit-quick-actions-mass.json": 348905, "home/lottie/search-ka-dark-concept.json": 59526, "home/lottie/notifications-ka-dark-concept.json": 327923, "home/lottie/search-ka-dark-wealth.json": 59525, "home/lottie/edit-quick-actions-ka-dark-wealth.json": 710037, "home/lottie/notifications-wealth.json": 185083, "home/lottie/concept-centre-ka-dark-wealth.json": 132860, "home/lottie/search-concept.json": 34996, "home/lottie/notifications-dark-concept.json": 204004, "home/lottie/edit-quick-actions-ka-dark-concept.json": 709989, "home/lottie/search-ka-mass.json": 59698, "home/lottie/concept-centre-ka-dark-mass.json": 133883, "home/lottie/concept-centre-dark-concept.json": 132824, "home/lottie/search-wealth.json": 34997, "home/lottie/concept-centre-ka-mass.json": 109399, "home/lottie/notifications-ka-mass.json": 305716, "home/lottie/notifications-ka-dark-mass.json": 328374, "home/lottie/notifications-ka-concept.json": 306588, "home/lottie/edit-quick-actions-ka-wealth.json": 696493, "home/lottie/search-ka-wealth.json": 59710, "home/lottie/search-ka-dark-mass.json": 59514, "home/lottie/search-ka-concept.json": 59709, "home/lottie/search-dark-concept.json": 34815, "home/lottie/edit-quick-actions-dark-wealth.json": 358430, "home/lottie/concept-centre-mass.json": 109394, "home/lottie/notifications-ka-dark-wealth.json": 327987, "home/lottie/concept-centre-ka-concept.json": 110136, "home/lottie/concept-centre-wealth.json": 110087, "home/lottie/concept-centre-dark-mass.json": 133878, "home/lottie/edit-quick-actions-dark-mass.json": 358721, "home/lottie/concept-centre-ka-dark-concept.json": 132829, "home/lottie/edit-quick-actions-wealth.json": 349950, "home/mp4/notifications-dark-mass.mp4": 425873, "home/mp4/search-concept.mp4": 44745, "home/mp4/notifications-ka-dark-wealth.mp4": 457949, "home/mp4/notifications-concept.mp4": 399580, "home/mp4/concept-centre-ka-wealth.mp4": 340238, "home/mp4/notifications-mass.mp4": 394665, "home/mp4/edit-quick-actions-ka-mass.mp4": 986774, "home/mp4/notifications-dark-wealth.mp4": 413020, "home/mp4/concept-centre-ka-dark-wealth.mp4": 322128, "home/mp4/concept-centre-ka-concept.mp4": 343864, "home/mp4/concept-centre-dark-wealth.mp4": 322128, "home/mp4/edit-quick-actions-ka-dark-wealth.mp4": 859335, "home/mp4/notifications-dark-concept.mp4": 422386, "home/mp4/search-ka-concept.mp4": 51963, "home/mp4/edit-quick-actions-ka-wealth.mp4": 1011404, "home/mp4/search-ka-dark-concept.mp4": 49957, "home/mp4/notifications-wealth.mp4": 396977, "home/mp4/edit-quick-actions-dark-mass.mp4": 709847, "home/mp4/edit-quick-actions-ka-concept.mp4": 1012999, "home/mp4/search-wealth.mp4": 43095, "home/mp4/concept-centre-ka-dark-concept.mp4": 340496, "home/mp4/edit-quick-actions-wealth.mp4": 829427, "home/mp4/edit-quick-actions-ka-dark-concept.mp4": 873734, "home/mp4/notifications-ka-dark-mass.mp4": 470534, "home/mp4/notifications-ka-dark-concept.mp4": 467864, "home/mp4/concept-centre-dark-concept.mp4": 340496, "home/mp4/notifications-ka-wealth.mp4": 449813, "home/mp4/concept-centre-dark-mass.mp4": 335891, "home/mp4/concept-centre-ka-dark-mass.mp4": 335891, "home/mp4/search-dark-wealth.mp4": 42429, "home/mp4/search-dark-mass.mp4": 45615, "home/mp4/search-ka-dark-mass.mp4": 52005, "home/mp4/search-ka-wealth.mp4": 49448, "home/mp4/burger-menu-concept.mp4": 621068, "home/mp4/edit-quick-actions-mass.mp4": 821640, "home/mp4/edit-quick-actions-concept.mp4": 822200, "home/mp4/edit-quick-actions-dark-wealth.mp4": 690183, "home/mp4/edit-quick-actions-ka-dark-mass.mp4": 889347, "home/mp4/notifications-ka-concept.mp4": 455210, "home/mp4/search-ka-dark-wealth.mp4": 48846, "home/mp4/concept-centre-ka-mass.mp4": 336564, "home/mp4/search-mass.mp4": 45463, "home/mp4/concept-centre-wealth.mp4": 340238, "home/mp4/notifications-ka-mass.mp4": 453349, "home/mp4/search-ka-mass.mp4": 52536, "home/mp4/concept-centre-mass.mp4": 336564, "home/mp4/edit-quick-actions-dark-concept.mp4": 684796, "home/mp4/search-dark-concept.mp4": 43316, "home/mp4/concept-centre-concept.mp4": 343864, "pfm/lottie/pfm_guide_charts_ka_dark_wealth.json": 143821, "pfm/lottie/pfm_guide_set_date_wealth.json": 149616, "pfm/lottie/pfm_guide_set_date_concept.json": 149617, "pfm/lottie/pfm_guide_compare_ka_dark_concept.json": 46797, "pfm/lottie/pfm_guide_charts_wealth.json": 129664, "pfm/lottie/pfm_guide_set_date_dark_wealth.json": 161250, "pfm/lottie/pfm_guide_compare_ka_dark_wealth.json": 46790, "pfm/lottie/pfm_guide_set_date_ka_concept.json": 162104, "pfm/lottie/pfm_guide_date_range_ka_dark_concept.json": 81321, "pfm/lottie/pfm_guide_date_range_concept.json": 76184, "pfm/lottie/pfm_guide_date_range_ka_concept.json": 80300, "pfm/lottie/pfm_guide_set_date_dark_mass.json": 161245, "pfm/lottie/pfm_guide_charts_concept.json": 129657, "pfm/lottie/pfm_guide_compare_dark_wealth.json": 37860, "pfm/lottie/pfm_guide_charts_ka_concept.json": 141543, "pfm/lottie/pfm_guide_date_range_dark_concept.json": 77205, "pfm/lottie/pfm_guide_compare_ka_mass.json": 46261, "pfm/lottie/pfm_guide_set_date_mass.json": 149611, "pfm/lottie/pfm_guide_date_range_mass.json": 76118, "pfm/lottie/pfm_guide_charts_ka_wealth.json": 141550, "pfm/lottie/pfm_guide_set_date_ka_dark_concept.json": 173738, "pfm/lottie/pfm_guide_charts_ka_dark_concept.json": 143872, "pfm/lottie/pfm_guide_compare_ka_dark_mass.json": 46749, "pfm/lottie/pfm_guide_date_range_ka_wealth.json": 80300, "pfm/lottie/pfm_guide_date_range_dark_mass.json": 77217, "pfm/lottie/pfm_guide_charts_dark_mass.json": 131782, "pfm/lottie/pfm_guide_set_date_dark_concept.json": 161251, "pfm/lottie/pfm_guide_compare_ka_concept.json": 46291, "pfm/lottie/pfm_guide_compare_wealth.json": 37360, "pfm/lottie/pfm_guide_charts_ka_mass.json": 141469, "pfm/lottie/pfm_guide_set_date_ka_dark_wealth.json": 173737, "pfm/lottie/pfm_guide_set_date_ka_wealth.json": 162103, "pfm/lottie/pfm_guide_set_date_ka_mass.json": 162098, "pfm/lottie/pfm_guide_charts_ka_dark_mass.json": 143668, "pfm/lottie/pfm_guide_date_range_ka_dark_mass.json": 81333, "pfm/lottie/pfm_guide_compare_dark_concept.json": 37867, "pfm/lottie/pfm_guide_charts_dark_concept.json": 131986, "pfm/lottie/pfm_guide_date_range_ka_mass.json": 80234, "pfm/lottie/pfm_guide_compare_dark_mass.json": 37819, "pfm/lottie/pfm_guide_compare_concept.json": 37361, "pfm/lottie/pfm_guide_date_range_wealth.json": 76184, "pfm/lottie/pfm_guide_compare_mass.json": 37331, "pfm/lottie/pfm_guide_set_date_ka_dark_mass.json": 173732, "pfm/lottie/pfm_guide_compare_ka_wealth.json": 46290, "pfm/lottie/pfm_guide_date_range_ka_dark_wealth.json": 81320, "pfm/lottie/pfm_guide_charts_dark_wealth.json": 131935, "pfm/lottie/pfm_guide_charts_mass.json": 129583, "pfm/lottie/pfm_guide_date_range_dark_wealth.json": 77204, "pfm/mp4/pfm_guide_charts_dark_mass.mp4": 285402, "pfm/mp4/pfm_guide_set_date_concept.mp4": 298879, "pfm/mp4/pfm_guide_date_range_ka_wealth.mp4": 173577, "pfm/mp4/pfm_guide_set_date_dark_concept.mp4": 267472, "pfm/mp4/pfm_guide_date_range_dark_wealth.mp4": 161022, "pfm/mp4/pfm_guide_date_range_wealth.mp4": 187032, "pfm/mp4/pfm_guide_set_date_mass.mp4": 293141, "pfm/mp4/pfm_guide_set_date_ka_dark_concept.mp4": 314702, "pfm/mp4/pfm_guide_charts_ka_dark_mass.mp4": 312240, "pfm/mp4/pfm_guide_date_range_ka_mass.mp4": 183699, "pfm/mp4/pfm_guide_compare_dark_concept.mp4": 106475, "pfm/mp4/pfm_guide_date_range_ka_dark_concept.mp4": 154927, "pfm/mp4/pfm_guide_date_range_ka_dark_wealth.mp4": 153745, "pfm/mp4/pfm_guide_date_range_ka_concept.mp4": 181138, "pfm/mp4/pfm_guide_compare_ka_mass.mp4": 132788, "pfm/mp4/pfm_guide_compare_ka_dark_concept.mp4": 110498, "pfm/mp4/pfm_guide_compare_dark_wealth.mp4": 105420, "pfm/mp4/pfm_guide_charts_ka_dark_wealth.mp4": 307127, "pfm/mp4/pfm_guide_date_range_dark_concept.mp4": 162448, "pfm/mp4/pfm_guide_date_range_ka_dark_mass.mp4": 161380, "pfm/mp4/pfm_guide_compare_ka_wealth.mp4": 126519, "pfm/mp4/pfm_guide_charts_dark_wealth.mp4": 280190, "pfm/mp4/pfm_guide_date_range_mass.mp4": 191139, "pfm/mp4/pfm_guide_compare_ka_dark_mass.mp4": 120556, "pfm/mp4/pfm_guide_charts_dark_concept.mp4": 280506, "pfm/mp4/pfm_guide_compare_ka_concept.mp4": 138884, "pfm/mp4/pfm_guide_set_date_wealth.mp4": 292271, "pfm/mp4/pfm_guide_set_date_ka_dark_mass.mp4": 322434, "pfm/mp4/pfm_guide_charts_concept.mp4": 324375, "pfm/mp4/pfm_guide_charts_ka_mass.mp4": 357404, "pfm/mp4/pfm_guide_charts_ka_wealth.mp4": 349484, "pfm/mp4/pfm_guide_charts_ka_concept.mp4": 356570, "pfm/mp4/pfm_guide_charts_ka_dark_concept.mp4": 308420, "pfm/mp4/pfm_guide_set_date_dark_mass.mp4": 272008, "pfm/mp4/pfm_guide_compare_mass.mp4": 129189, "pfm/mp4/pfm_guide_set_date_ka_dark_wealth.mp4": 306660, "pfm/mp4/pfm_guide_date_range_concept.mp4": 192833, "pfm/mp4/pfm_guide_charts_mass.mp4": 323902, "pfm/mp4/pfm_guide_compare_ka_dark_wealth.mp4": 108651, "pfm/mp4/pfm_guide_compare_wealth.mp4": 122536, "pfm/mp4/pfm_guide_set_date_ka_concept.mp4": 366850, "pfm/mp4/pfm_guide_compare_dark_mass.mp4": 116565, "pfm/mp4/pfm_guide_compare_concept.mp4": 134359, "pfm/mp4/pfm_guide_date_range_dark_mass.mp4": 169276, "pfm/mp4/pfm_guide_set_date_ka_wealth.mp4": 356255, "pfm/mp4/pfm_guide_set_date_ka_mass.mp4": 359282, "pfm/mp4/pfm_guide_set_date_dark_wealth.mp4": 263509, "pfm/mp4/pfm_guide_charts_wealth.mp4": 318076, "accounts/lottie/accounts_autohide_light_concept.json": 1074431, "accounts/lottie/accounts_autohide_light_wealth.json": 1071894, "accounts/lottie/accounts_drag_to_hide_dark_wealth.json": 3842937, "accounts/lottie/accounts_autohide_dark_mass.json": 1292443, "accounts/lottie/accounts_drag_to_hide_dark_mass.json": 3843727, "accounts/lottie/accounts_autohide_dark_wealth.json": 1289965, "accounts/lottie/accounts_drag_to_hide_light_concept.json": 3427259, "accounts/lottie/accounts_autohide_light_mass.json": 1073668, "accounts/lottie/accounts_drag_to_hide_light_wealth.json": 3387226, "accounts/lottie/accounts_autohide_dark_concept.json": 1290114, "accounts/lottie/accounts_drag_to_hide_dark_concept.json": 3856582, "accounts/lottie/accounts_drag_to_hide_light_mass.json": 3387512, "accounts/mp4/accounts_drag_to_hide_light_concept.mp4": 370232, "accounts/mp4/accounts_drag_to_hide_light_mass.mp4": 392559, "accounts/mp4/accounts_drag_to_hide_dark_mass.mp4": 409310, "accounts/mp4/accounts_autohide_light_mass.mp4": 97103, "accounts/mp4/accounts_autohide_dark_concept.mp4": 113234, "accounts/mp4/accounts_autohide_dark_wealth.mp4": 112920, "accounts/mp4/accounts_drag_to_hide_light_wealth.mp4": 365351, "accounts/mp4/accounts_autohide_light_wealth.mp4": 98204, "accounts/mp4/accounts_autohide_light_concept.mp4": 97168, "accounts/mp4/accounts_autohide_dark_mass.mp4": 113553, "accounts/mp4/accounts_drag_to_hide_dark_concept.mp4": 404821, "accounts/mp4/accounts_drag_to_hide_dark_wealth.mp4": 405434}, DUR = {"home/mp4/burger-menu-wealth.mp4": 7.0, "home/mp4/burger-menu-ka-wealth.mp4": 7.0, "home/mp4/burger-menu-ka-concept.mp4": 7.0, "home/mp4/notifications-dark-mass.mp4": 7.2, "home/mp4/search-concept.mp4": 7.3, "home/mp4/notifications-ka-dark-wealth.mp4": 7.2, "home/mp4/notifications-concept.mp4": 7.2, "home/mp4/concept-centre-ka-wealth.mp4": 5.0, "home/mp4/notifications-mass.mp4": 7.2, "home/mp4/edit-quick-actions-ka-mass.mp4": 7.8, "home/mp4/notifications-dark-wealth.mp4": 7.2, "home/mp4/concept-centre-ka-dark-wealth.mp4": 5.0, "home/mp4/concept-centre-ka-concept.mp4": 5.0, "home/mp4/concept-centre-dark-wealth.mp4": 5.0, "home/mp4/edit-quick-actions-ka-dark-wealth.mp4": 7.8, "home/mp4/notifications-dark-concept.mp4": 7.2, "home/mp4/search-ka-concept.mp4": 7.3, "home/mp4/edit-quick-actions-ka-wealth.mp4": 7.8, "home/mp4/search-ka-dark-concept.mp4": 7.3, "home/mp4/notifications-wealth.mp4": 7.2, "home/mp4/edit-quick-actions-dark-mass.mp4": 7.8, "home/mp4/edit-quick-actions-ka-concept.mp4": 7.8, "home/mp4/search-wealth.mp4": 7.3, "home/mp4/concept-centre-ka-dark-concept.mp4": 5.0, "home/mp4/edit-quick-actions-wealth.mp4": 7.8, "home/mp4/edit-quick-actions-ka-dark-concept.mp4": 7.8, "home/mp4/notifications-ka-dark-mass.mp4": 7.2, "home/mp4/notifications-ka-dark-concept.mp4": 7.2, "home/mp4/concept-centre-dark-concept.mp4": 5.0, "home/mp4/notifications-ka-wealth.mp4": 7.2, "home/mp4/concept-centre-dark-mass.mp4": 5.0, "home/mp4/concept-centre-ka-dark-mass.mp4": 5.0, "home/mp4/search-dark-wealth.mp4": 7.3, "home/mp4/search-dark-mass.mp4": 7.3, "home/mp4/search-ka-dark-mass.mp4": 7.3, "home/mp4/search-ka-wealth.mp4": 7.3, "home/mp4/burger-menu-concept.mp4": 7.0, "home/mp4/edit-quick-actions-mass.mp4": 7.8, "home/mp4/edit-quick-actions-concept.mp4": 7.8, "home/mp4/edit-quick-actions-dark-wealth.mp4": 7.8, "home/mp4/edit-quick-actions-ka-dark-mass.mp4": 7.8, "home/mp4/notifications-ka-concept.mp4": 7.2, "home/mp4/search-ka-dark-wealth.mp4": 7.3, "home/mp4/concept-centre-ka-mass.mp4": 5.0, "home/mp4/search-mass.mp4": 7.3, "home/mp4/concept-centre-wealth.mp4": 5.0, "home/mp4/notifications-ka-mass.mp4": 7.2, "home/mp4/search-ka-mass.mp4": 7.3, "home/mp4/concept-centre-mass.mp4": 5.0, "home/mp4/edit-quick-actions-dark-concept.mp4": 7.8, "home/mp4/search-dark-concept.mp4": 7.3, "home/mp4/concept-centre-concept.mp4": 5.0, "pfm/mp4/pfm_guide_charts_dark_mass.mp4": 6.0, "pfm/mp4/pfm_guide_set_date_concept.mp4": 4.5, "pfm/mp4/pfm_guide_date_range_ka_wealth.mp4": 5.5, "pfm/mp4/pfm_guide_set_date_dark_concept.mp4": 4.5, "pfm/mp4/pfm_guide_date_range_dark_wealth.mp4": 5.5, "pfm/mp4/pfm_guide_date_range_wealth.mp4": 5.5, "pfm/mp4/pfm_guide_set_date_mass.mp4": 4.5, "pfm/mp4/pfm_guide_set_date_ka_dark_concept.mp4": 4.5, "pfm/mp4/pfm_guide_charts_ka_dark_mass.mp4": 6.0, "pfm/mp4/pfm_guide_date_range_ka_mass.mp4": 5.5, "pfm/mp4/pfm_guide_compare_dark_concept.mp4": 7.0, "pfm/mp4/pfm_guide_date_range_ka_dark_concept.mp4": 5.5, "pfm/mp4/pfm_guide_date_range_ka_dark_wealth.mp4": 5.5, "pfm/mp4/pfm_guide_date_range_ka_concept.mp4": 5.5, "pfm/mp4/pfm_guide_compare_ka_mass.mp4": 7.0, "pfm/mp4/pfm_guide_compare_ka_dark_concept.mp4": 7.0, "pfm/mp4/pfm_guide_compare_dark_wealth.mp4": 7.0, "pfm/mp4/pfm_guide_charts_ka_dark_wealth.mp4": 6.0, "pfm/mp4/pfm_guide_date_range_dark_concept.mp4": 5.5, "pfm/mp4/pfm_guide_date_range_ka_dark_mass.mp4": 5.5, "pfm/mp4/pfm_guide_compare_ka_wealth.mp4": 7.0, "pfm/mp4/pfm_guide_charts_dark_wealth.mp4": 6.0, "pfm/mp4/pfm_guide_date_range_mass.mp4": 5.5, "pfm/mp4/pfm_guide_compare_ka_dark_mass.mp4": 7.0, "pfm/mp4/pfm_guide_charts_dark_concept.mp4": 6.0, "pfm/mp4/pfm_guide_compare_ka_concept.mp4": 7.0, "pfm/mp4/pfm_guide_set_date_wealth.mp4": 4.5, "pfm/mp4/pfm_guide_set_date_ka_dark_mass.mp4": 4.5, "pfm/mp4/pfm_guide_charts_concept.mp4": 6.0, "pfm/mp4/pfm_guide_charts_ka_mass.mp4": 6.0, "pfm/mp4/pfm_guide_charts_ka_wealth.mp4": 6.0, "pfm/mp4/pfm_guide_charts_ka_concept.mp4": 6.0, "pfm/mp4/pfm_guide_charts_ka_dark_concept.mp4": 6.0, "pfm/mp4/pfm_guide_set_date_dark_mass.mp4": 4.5, "pfm/mp4/pfm_guide_compare_mass.mp4": 7.0, "pfm/mp4/pfm_guide_set_date_ka_dark_wealth.mp4": 4.5, "pfm/mp4/pfm_guide_date_range_concept.mp4": 5.5, "pfm/mp4/pfm_guide_charts_mass.mp4": 6.0, "pfm/mp4/pfm_guide_compare_ka_dark_wealth.mp4": 7.0, "pfm/mp4/pfm_guide_compare_wealth.mp4": 7.0, "pfm/mp4/pfm_guide_set_date_ka_concept.mp4": 4.5, "pfm/mp4/pfm_guide_compare_dark_mass.mp4": 7.0, "pfm/mp4/pfm_guide_compare_concept.mp4": 7.0, "pfm/mp4/pfm_guide_date_range_dark_mass.mp4": 5.5, "pfm/mp4/pfm_guide_set_date_ka_wealth.mp4": 4.5, "pfm/mp4/pfm_guide_set_date_ka_mass.mp4": 4.5, "pfm/mp4/pfm_guide_set_date_dark_wealth.mp4": 4.5, "pfm/mp4/pfm_guide_charts_wealth.mp4": 6.0, "accounts/mp4/accounts_drag_to_hide_light_concept.mp4": 7.6, "accounts/mp4/accounts_drag_to_hide_light_mass.mp4": 7.6, "accounts/mp4/accounts_drag_to_hide_dark_mass.mp4": 7.6, "accounts/mp4/accounts_autohide_light_mass.mp4": 3.6, "accounts/mp4/accounts_autohide_dark_concept.mp4": 3.6, "accounts/mp4/accounts_autohide_dark_wealth.mp4": 3.6, "accounts/mp4/accounts_drag_to_hide_light_wealth.mp4": 7.6, "accounts/mp4/accounts_autohide_light_wealth.mp4": 3.6, "accounts/mp4/accounts_autohide_light_concept.mp4": 3.6, "accounts/mp4/accounts_autohide_dark_mass.mp4": 3.6, "accounts/mp4/accounts_drag_to_hide_dark_concept.mp4": 7.6, "accounts/mp4/accounts_drag_to_hide_dark_wealth.mp4": 7.6};
   const GUIDES = [
     { key: 'home', name: 'Home guide', desc: 'Tips on the home screen', langs: true, items: [
-      { title: 'Edit quick actions', base: 'edit-quick-actions' }, { title: 'Search', base: 'search' },
+      { title: 'Edit quick actions', base: 'edit-quick-actions' }, { title: 'Search', base: 'search' }, { title: 'Burger menu', base: 'burger-menu', styles: ['concept', 'wealth'], lightOnly: true },
       { title: 'Notifications', base: 'notifications' }, { title: 'Concept centre', base: 'concept-centre' } ],
       file: (it, l, m) => `${it.base}${l === 'ka' ? '-ka' : ''}${m === 'dark' ? '-dark' : ''}` },
     { key: 'pfm', name: 'PFM guide', desc: 'Tips inside My Finances', langs: true, items: [
       { title: 'Set starting date', base: 'pfm_guide_set_date' }, { title: 'Date range', base: 'pfm_guide_date_range' },
       { title: 'Three different charts', base: 'pfm_guide_charts' }, { title: 'Expenses / Income', base: 'pfm_guide_compare' } ],
       file: (it, l, m) => `${it.base}${l === 'ka' ? '_ka' : ''}${m === 'dark' ? '_dark' : ''}` },
-    { key: 'accounts', name: 'Accounts guide', desc: 'Hiding zero-balance accounts on the list and carousel widget', langs: false, items: [
-      { title: 'Empty accounts hidden', base: 'accounts_autohide', tag: 'List widget' }, { title: 'Drag to hide', base: 'accounts_drag_to_hide', tag: 'List widget' },
-      { title: 'Empty accounts hidden', base: 'accounts_carousel_autohide', tag: 'Carousel widget' }, { title: 'Drag to hide', base: 'accounts_carousel_drag_to_hide', tag: 'Carousel widget' } ],
+    { key: 'accounts', name: 'Accounts guide', desc: 'Hiding zero-balance accounts on the list widget', langs: false, items: [
+      { title: 'Empty accounts hidden', base: 'accounts_autohide', tag: 'List widget' }, { title: 'Drag to hide', base: 'accounts_drag_to_hide', tag: 'List widget' } ],
       file: (it, l, m) => `${it.base}_${m}` },
   ];
   const FMT = { mp4: { dir: 'mp4', ext: 'mp4', label: 'MP4', sub: 'Video' }, lottie: { dir: 'lottie', ext: 'json', label: 'Lottie', sub: 'JSON' } };
   const ICON_DL = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8.5M4.5 7 8 10.5 11.5 7M2.5 13.5h11"/></svg>';
   const ICON_VID = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><rect x="1.8" y="3.5" width="9" height="9" rx="2"/><path d="m10.8 6.6 3.4-2v6.8l-3.4-2z"/></svg>';
   const ICON_LOT = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13c3.5 0 3.5-10 7-10M6 13h7"/><circle cx="10.5" cy="3" r=".2"/></svg>';
-  const path = (g, it, l, m, f) => `${g.key}/${FMT[f].dir}/${g.file(it, g.langs ? l : 'en', m)}.${FMT[f].ext}`;
+  const STYLES = { mass: 'Mass', concept: 'Concept', wealth: 'Wealth' };
+  const path = (g, it, l, m, f, st = S.style) => `${g.key}/${FMT[f].dir}/${g.file(it, g.langs ? l : 'en', it.lightOnly ? 'light' : m)}${g.key === 'home' ? '-' : '_'}${st}.${FMT[f].ext}`;
   const size = n => n >= 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB';
-  const variants = g => (g.langs ? ['en', 'ka'] : ['en']).flatMap(l => ['light', 'dark'].map(m => [l, m]));
-  const files = (gs, fmts) => gs.flatMap(g => g.items.flatMap(it => variants(g).flatMap(([l, m]) => fmts.map(f => ({ g, p: path(g, it, l, m, f), f })))));
+  const variants = (g, it) => (g.langs ? ['en', 'ka'] : ['en']).flatMap(l => (it && it.lightOnly ? ['light'] : ['light', 'dark']).map(m => [l, m]));
+  const inStyle = (it, st = S.style) => !it.styles || it.styles.includes(st);
+  const files = (gs, fmts, sts = [S.style]) => sts.flatMap(st => gs.flatMap(g => g.items.filter(it => inStyle(it, st)).flatMap(it => variants(g, it).flatMap(([l, m]) => fmts.map(f => ({ g, st, p: path(g, it, l, m, f, st), f }))))));
   const total = list => list.reduce((a, x) => a + (SIZES[x.p] || 0), 0);
   const fmtsOf = k => k === 'both' ? ['mp4', 'lottie'] : [k];
 
-  const S = { lang: 'en', mode: 'light', filter: 'all' };
+  const S = { style: 'mass', lang: 'en', mode: 'light', filter: 'all' };
   let dl = null;
 
   // ---------- stats + filter ----------
   const allFiles = files(GUIDES, ['mp4', 'lottie']);
   document.getElementById('stats').innerHTML =
     `<div class="stat"><b>${GUIDES.reduce((a, g) => a + g.items.length, 0)}</b><span>animations</span></div>
-     <div class="stat"><b>${files(GUIDES, ['mp4']).length}</b><span>files per format</span></div>
-     <div class="stat"><b>${size(total(allFiles))}</b><span>MP4 + Lottie</span></div>`;
+     <div class="stat"><b>3</b><span>styles · Mass, Concept, Wealth</span></div>
+     <div class="stat"><b>${files(GUIDES, ['mp4'], Object.keys(STYLES)).length}</b><span>videos, each also as Lottie</span></div>
+     <div class="stat"><b>${size(total(files(GUIDES, ['mp4', 'lottie'], Object.keys(STYLES))))}</b><span>in total</span></div>`;
   const fseg = document.getElementById('filterSeg');
   fseg.innerHTML = [['all', 'All', GUIDES.reduce((a, g) => a + g.items.length, 0)], ...GUIDES.map(g => [g.key, g.name.replace(' guide', ''), g.items.length])]
     .map(([k, n, c]) => `<button type="button" data-v="${k}" aria-pressed="${k === 'all'}">${n}<span class="n">${c}</span></button>`).join('');
@@ -229,7 +229,7 @@ section.guide[hidden]{display:none}
     s.innerHTML = `<div class="ghead"><div><h2>${g.name}<span class="cnt">${g.items.length} animations</span></h2><p>${g.desc}${g.langs ? ' · English and Georgian' : ''}</p></div>
       <div class="menu"><button type="button" class="btn sub" aria-haspopup="true" aria-expanded="false">${ICON_DL}Download all<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 6.5 3.5 3.5 3.5-3.5"/></svg></button><div class="pop" hidden></div></div></div>
       <div class="grid"></div>`;
-    setupMenu(s.querySelector('.menu'), `${g.name} · zip`, [g]);
+    setupMenu(s.querySelector('.menu'), g.name, [g]);
     const grid = s.querySelector('.grid');
     g.items.forEach(it => {
       const c = document.createElement('article'); c.className = 'card';
@@ -238,18 +238,21 @@ section.guide[hidden]{display:none}
         <div class="acts"></div>`;
       const v = c.querySelector('video'), tags = c.querySelector('.tags'), acts = c.querySelector('.acts');
       const upd = () => {
+        c.hidden = !inStyle(it);
         const src = path(g, it, S.lang, S.mode, 'mp4');
         if (v.getAttribute('src') !== src) { v.setAttribute('src', src); v.play?.().catch(() => {}); }
         c.classList.toggle('dark', S.mode === 'dark');
-        tags.innerHTML = [it.tag, g.langs ? (S.lang === 'ka' ? 'Georgian' : 'English') : null, S.mode === 'dark' ? 'Dark' : 'Light', (DUR[src] || 0).toFixed(1) + ' s'].filter(Boolean).map(t => `<span>${t}</span>`).join('');
+        tags.innerHTML = [STYLES[S.style], it.tag, g.langs ? (S.lang === 'ka' ? 'Georgian' : 'English') : null, it.lightOnly ? 'Light only' : S.mode === 'dark' ? 'Dark' : 'Light', (DUR[src] || 0).toFixed(1) + ' s'].filter(Boolean).map(t => `<span>${t}</span>`).join('');
         acts.innerHTML = ''; fileButtons(g, it).forEach(b => acts.appendChild(b));
       };
       c.querySelector('.stage').onclick = () => openLb(g, it);
       grid.appendChild(c); updaters.push(upd); upd();
     });
+    const cnt = () => { s.querySelector('.cnt').textContent = `${g.items.filter(it => inStyle(it)).length} animations`; };
+    updaters.push(cnt); cnt();
     root.appendChild(s);
   });
-  setupMenu(document.getElementById('allMenu'), 'All guides · one zip', GUIDES);
+  setupMenu(document.getElementById('allMenu'), 'All guides', GUIDES);
 
   function fileButtons(g, it) {
     return ['mp4', 'lottie'].map(f => {
@@ -267,20 +270,29 @@ section.guide[hidden]{display:none}
   const refresh = () => { updaters.forEach(u => u()); if (!lb.hidden && lbCur) openLb(...lbCur); };
   bindSeg('langSeg', 'lang', refresh);
   bindSeg('modeSeg', 'mode', refresh);
+  bindSeg('styleSeg', 'style', refresh);
   bindSeg('filterSeg', 'filter', () => { GUIDES.forEach(g => sections[g.key].hidden = S.filter !== 'all' && S.filter !== g.key); });
 
   // ---------- menus ----------
   function setupMenu(menu, heading, gs) {
     const btn = menu.querySelector('button'), pop = menu.querySelector('.pop');
-    pop.innerHTML = `<div class="h">${heading}</div>`;
-    [['mp4', 'All MP4', 'MP4'], ['lottie', 'All Lottie', 'JSON'], ['both', 'MP4 + Lottie', 'ALL']].forEach(([k, label, ico]) => {
-      const list = files(gs, fmtsOf(k)), b = document.createElement('button'); b.type = 'button';
-      b.innerHTML = `<span class="ico">${ico}</span><span class="txt"><b>${label}</b><small>${list.length} files · ${size(total(list))}</small></span>`;
-      b.onclick = async () => { close(); btn.disabled = true; try { await saveZip(gs, k); } catch (e) { report(e); } btn.disabled = false; };
-      pop.appendChild(b);
-    });
+    const build = () => {
+      pop.innerHTML = '';
+      const sec = (title, opts) => {
+        const h = document.createElement('div'); h.className = 'h'; h.textContent = title; pop.appendChild(h);
+        opts.forEach(([k, label, ico, sts]) => {
+          const list = files(gs, fmtsOf(k), sts), b = document.createElement('button'); b.type = 'button';
+          b.innerHTML = `<span class="ico">${ico}</span><span class="txt"><b>${label}</b><small>${list.length} files · ${size(total(list))}</small></span>`;
+          b.onclick = async () => { close(); btn.disabled = true; try { await saveZip(gs, k, sts); } catch (e) { report(e); } btn.disabled = false; };
+          pop.appendChild(b);
+        });
+      };
+      const cur = [S.style], all = Object.keys(STYLES);
+      sec(`${heading} · ${STYLES[S.style]}`, [['mp4', 'All MP4', 'MP4', cur], ['lottie', 'All Lottie', 'JSON', cur], ['both', 'MP4 + Lottie', 'ALL', cur]]);
+      sec(`${heading} · all 3 styles`, [['mp4', 'MP4, every style', 'MP4', all], ['lottie', 'Lottie, every style', 'JSON', all]]);
+    };
     const close = () => { pop.hidden = true; btn.setAttribute('aria-expanded', 'false'); };
-    btn.onclick = e => { e.stopPropagation(); const open = pop.hidden; document.querySelectorAll('.pop').forEach(p => p.hidden = true); document.querySelectorAll('[aria-haspopup]').forEach(x => x.setAttribute('aria-expanded', 'false')); pop.hidden = !open; btn.setAttribute('aria-expanded', String(open)); };
+    btn.onclick = e => { e.stopPropagation(); const open = pop.hidden; document.querySelectorAll('.pop').forEach(p => p.hidden = true); document.querySelectorAll('[aria-haspopup]').forEach(x => x.setAttribute('aria-expanded', 'false')); if (open) build(); pop.hidden = !open; btn.setAttribute('aria-expanded', String(open)); };
     document.addEventListener('click', e => { if (!menu.contains(e.target)) close(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
   }
@@ -288,12 +300,13 @@ section.guide[hidden]{display:none}
   // ---------- lightbox ----------
   const lb = document.getElementById('lb'), lbv = lb.querySelector('video'); let lbCur = null, lastFocus = null;
   function openLb(g, it) {
+    if (!inStyle(it)) { closeLb(); return; }
     lbCur = [g, it]; if (lb.hidden) lastFocus = document.activeElement;
     const src = path(g, it, S.lang, S.mode, 'mp4');
     if (lbv.getAttribute('src') !== src) { lbv.setAttribute('src', src); lbv.play?.().catch(() => {}); }
     lb.classList.toggle('dark', S.mode === 'dark');
     document.getElementById('lbTitle').textContent = it.title;
-    document.getElementById('lbTags').innerHTML = [g.name, it.tag, g.langs ? (S.lang === 'ka' ? 'Georgian' : 'English') : null, S.mode === 'dark' ? 'Dark' : 'Light', (DUR[src] || 0).toFixed(1) + ' s'].filter(Boolean).map(t => `<span>${t}</span>`).join('');
+    document.getElementById('lbTags').innerHTML = [g.name, STYLES[S.style], it.tag, g.langs ? (S.lang === 'ka' ? 'Georgian' : 'English') : null, it.lightOnly ? 'Light only' : S.mode === 'dark' ? 'Dark' : 'Light', (DUR[src] || 0).toFixed(1) + ' s'].filter(Boolean).map(t => `<span>${t}</span>`).join('');
     const a = document.getElementById('lbActs'); a.innerHTML = ''; fileButtons(g, it).forEach(b => a.appendChild(b));
     lb.hidden = false; document.getElementById('lbClose').focus();
   }
@@ -309,21 +322,21 @@ section.guide[hidden]{display:none}
 
   // ---------- downloads ----------
   async function save(filename, blob) {
-    const url = URL.createObjectURL(blob), a = document.createElement('a');
-    a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 30000);
-    toast(`Downloading ${filename}`);
+    if (!dl) throw { code: 'unavailable' };
+    const r = await dl.save({ filename, data: blob });
+    if (r.status === 'saved') toast(`Saved ${filename}`);
   }
   async function saveOne(p) { const blob = await (await fetch(p)).blob(); await save(p.split('/').pop(), blob); }
-  async function saveZip(gs, k) {
-    const label = { mp4: 'MP4', lottie: 'Lottie', both: 'MP4 + Lottie' }[k];
+  async function saveZip(gs, k, sts = [S.style]) {
+    if (!dl) throw { code: 'unavailable' };
+    const label = { mp4: 'MP4', lottie: 'Lottie', both: 'MP4 + Lottie' }[k] + (sts.length > 1 ? ', all styles' : ` (${STYLES[sts[0]]})`);
     const name = gs.length > 1 ? 'TBC guide animations' : gs[0].name;
-    const list = files(gs, fmtsOf(k)), zip = new JSZip(); let done = 0;
+    const list = files(gs, fmtsOf(k), sts), zip = new JSZip(); let done = 0;
     toast(`Collecting ${list.length} files…`, 0);
     for (let i = 0; i < list.length; i += 6) {
       await Promise.all(list.slice(i, i + 6).map(async x => {
         const blob = await (await fetch(x.p)).blob();
-        zip.file(`${name}/${gs.length > 1 ? x.g.name + '/' : ''}${FMT[x.f].label}/${x.p.split('/').pop()}`, blob);
+        zip.file(`${name}/${STYLES[x.st]}/${gs.length > 1 ? x.g.name + '/' : ''}${FMT[x.f].label}/${x.p.split('/').pop()}`, blob);
         done++; toast(`Collecting files… ${done} / ${list.length}`, done / list.length * .9);
       }));
     }
@@ -337,10 +350,8 @@ section.guide[hidden]{display:none}
     if (c === 'declined') return toast('Download cancelled');
     if (c === 'rate_limited') return toast('A save prompt is already open');
     if (c === 'too_large') return toast('Too large for this device. Try one guide at a time.');
-    toast('Could not download the file. Try again.');
+    toast(dl ? 'Could not save the file. Try again.' : 'Downloads work when this page is open in claude.ai.');
   }
+  if (window.claude?.use) claude.use('downloads').then(ns => { dl = ns; }).catch(() => {});
 })();
 </script>
-
-</body>
-</html>
